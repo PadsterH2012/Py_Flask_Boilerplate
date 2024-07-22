@@ -56,7 +56,7 @@ def login_page():
 
 @app.route('/register')
 def register_page():
-    return render_template('register.html')
+    return render_template('register.html')  # Ensure this template exists in the templates directory
 
 def connect_to_database(retries=5, delay=5):
     try:
