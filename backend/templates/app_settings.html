@@ -4,6 +4,7 @@
 
 {% block content %}
     <h1>App Settings</h1>
+    <div id="statusMessage" style="display: none; margin-bottom: 20px;"></div>
     <form id="appSettingsForm">
         <label for="theme">Theme:</label>
         <select id="theme" name="theme">
@@ -19,6 +20,7 @@
         e.preventDefault();
         
         const theme = document.getElementById('theme').value;
+        const statusMessage = document.getElementById('statusMessage');
         
         fetch('/app_settings', {
             method: 'POST',
@@ -30,15 +32,23 @@
         .then(response => response.json())
         .then(data => {
             if (data.message === 'Settings updated successfully!') {
-                alert('Settings updated successfully!');
-                location.reload();
+                statusMessage.textContent = 'Settings updated successfully!';
+                statusMessage.style.display = 'block';
+                statusMessage.style.color = 'green';
+                setTimeout(() => {
+                    location.reload();
+                }, 1500);
             } else {
-                console.error('Error:', data.message);
+                statusMessage.textContent = 'Error: ' + data.message;
+                statusMessage.style.display = 'block';
+                statusMessage.style.color = 'red';
             }
         })
         .catch((error) => {
             console.error('Error:', error);
-            alert('An error occurred while updating settings.');
+            statusMessage.textContent = 'An error occurred while updating settings.';
+            statusMessage.style.display = 'block';
+            statusMessage.style.color = 'red';
         });
     });
     </script>
