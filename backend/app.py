@@ -36,9 +36,14 @@ def register():
 
 @app.route('/login', methods=['POST'])
 def login():
-    data = request.get_json()
+    if request.is_json:
+        data = request.get_json()
+    else:
+        data = request.form
+
     if not data or 'username' not in data or 'password' not in data:
         return jsonify({'message': 'Missing username or password'}), 400
+    
     user = User.query.filter_by(username=data['username']).first()
     
     if user and check_password_hash(user.password, data['password']):
