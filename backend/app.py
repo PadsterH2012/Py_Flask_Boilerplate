@@ -61,7 +61,7 @@ def register_page():
 def connect_to_database(retries=5, delay=5):
     try:
         for attempt in range(retries):
-        try:
+            try:
             with app.app_context():
                 db.create_all()
             print("Successfully connected to the database!")
