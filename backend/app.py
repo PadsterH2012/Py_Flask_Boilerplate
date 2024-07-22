@@ -80,6 +80,18 @@ def dashboard():
         return jsonify({'message': 'Unauthorized'}), 401
     return render_template('dashboard.html')
 
+@app.route('/user_settings')
+def user_settings():
+    if 'user_id' not in session:
+        return jsonify({'message': 'Unauthorized'}), 401
+    return render_template('user_settings.html')
+
+@app.route('/app_settings')
+def app_settings():
+    if 'user_id' not in session:
+        return jsonify({'message': 'Unauthorized'}), 401
+    return render_template('app_settings.html')
+
 def connect_to_database(retries=5, delay=5):
     for attempt in range(retries):
         try:
