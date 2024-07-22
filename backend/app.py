@@ -13,6 +13,7 @@ db = SQLAlchemy(app)
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(50), unique=True, nullable=False)
+    email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(128), nullable=False)
 
 @app.route('/register', methods=['POST'])
@@ -22,13 +23,14 @@ def register():
     else:
         data = request.form
 
-    if not data or 'username' not in data or 'password' not in data:
-        return jsonify({'message': 'Missing username or password'}), 400
+    if not data or 'username' not in data or 'email' not in data or 'password' not in data:
+        return jsonify({'message': 'Missing username, email, or password'}), 400
     
     username = data['username']
+    email = data['email']
     password = generate_password_hash(data['password'], method='pbkdf2:sha256')
     
-    new_user = User(username=username, password=password)
+    new_user = User(username=username, email=email, password=password)
     db.session.add(new_user)
     db.session.commit()
     
