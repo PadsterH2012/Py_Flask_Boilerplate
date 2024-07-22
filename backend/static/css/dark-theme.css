@@ -23,6 +23,10 @@ input, select {
     border-color: var(--input-border);
 }
 
+input::placeholder {
+    color: #a0a0a0;
+}
+
 button {
     background-color: var(--primary-color);
     color: var(--text-color);
