@@ -7,7 +7,7 @@
     <form id="appSettingsForm">
         <label for="theme">Theme:</label>
         <select id="theme" name="theme">
-            <option value="light" {% if current_theme == 'light' %}selected{% endif %}>Light</option>
+            <option value="light" {% if current_theme != 'dark' %}selected{% endif %}>Light</option>
             <option value="dark" {% if current_theme == 'dark' %}selected{% endif %}>Dark</option>
         </select>
         
