@@ -7,21 +7,9 @@
     <form id="appSettingsForm">
         <label for="theme">Theme:</label>
         <select id="theme" name="theme">
-            <option value="light">Light</option>
-            <option value="dark">Dark</option>
+            <option value="light" {% if current_theme == 'light' %}selected{% endif %}>Light</option>
+            <option value="dark" {% if current_theme == 'dark' %}selected{% endif %}>Dark</option>
         </select>
-        
-        <label for="language">Language:</label>
-        <select id="language" name="language">
-            <option value="en">English</option>
-            <option value="es">Español</option>
-            <option value="fr">Français</option>
-        </select>
-        
-        <label for="notifications">
-            <input type="checkbox" id="notifications" name="notifications">
-            Enable Notifications
-        </label>
         
         <button type="submit">Save Settings</button>
     </form>
@@ -29,8 +17,29 @@
     <script>
     document.getElementById('appSettingsForm').addEventListener('submit', function(e) {
         e.preventDefault();
-        // Add logic to handle form submission
-        alert('App settings update functionality not implemented yet.');
+        
+        const theme = document.getElementById('theme').value;
+        
+        fetch('/app_settings', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: `theme=${theme}`
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.message === 'Settings updated successfully!') {
+                alert('Settings updated successfully!');
+                location.reload();
+            } else {
+                console.error('Error:', data.message);
+            }
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+            alert('An error occurred while updating settings.');
+        });
     });
     </script>
 {% endblock %}
