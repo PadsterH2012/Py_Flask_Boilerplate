@@ -3,34 +3,6 @@
 {% block title %}Dashboard{% endblock %}
 
 {% block content %}
-    <header>
-        <nav>
-            <ul>
-                <li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
-                <li><a href="{{ url_for('user_settings') }}">User Settings</a></li>
-                <li><a href="{{ url_for('app_settings') }}">App Settings</a></li>
-                <li><a href="#" id="logoutButton">Logout</a></li>
-            </ul>
-        </nav>
-    </header>
-
     <h1>Dashboard</h1>
     <p>Welcome to your dashboard, {{ username }}!</p>
-
-    <script>
-    document.getElementById('logoutButton').addEventListener('click', function(e) {
-        e.preventDefault();
-        fetch('/logout', {
-            method: 'POST',
-        })
-        .then(response => response.json())
-        .then(data => {
-            window.location.href = '/';
-        })
-        .catch((error) => {
-            console.error('Error:', error);
-            alert('An error occurred during logout.');
-        });
-    });
-    </script>
 {% endblock %}
