@@ -1,11 +1,11 @@
-from flask import Flask, request, jsonify, session, render_template
+from flask import Flask, request, jsonify, session, render_template, url_for
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
 import time
 from sqlalchemy.exc import OperationalError
 import os
 
-app = Flask(__name__, template_folder=os.path.abspath('templates'))
+app = Flask(__name__, template_folder=os.path.abspath('templates'), static_folder=os.path.abspath('static'))
 app.secret_key = 'your_secret_key'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://user:password@db:5432/mydatabase'
 db = SQLAlchemy(app)
