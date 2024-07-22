@@ -78,7 +78,8 @@ def register_page():
 def dashboard():
     if 'user_id' not in session:
         return jsonify({'message': 'Unauthorized'}), 401
-    return render_template('dashboard.html')
+    user = User.query.get(session['user_id'])
+    return render_template('dashboard.html', username=user.username)
 
 @app.route('/user_settings', methods=['GET', 'POST'])
 def user_settings():
