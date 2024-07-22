@@ -48,7 +48,7 @@ def logout():
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return render_template('index.html')  # Ensure this is rendering the correct template
 
 @app.route('/login')
 def login_page():
