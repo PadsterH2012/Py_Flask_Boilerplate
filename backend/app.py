@@ -3,8 +3,9 @@ from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
 import time
 from sqlalchemy.exc import OperationalError
+import os
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder=os.path.abspath('templates'))
 app.secret_key = 'your_secret_key'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://user:password@db:5432/mydatabase'
 db = SQLAlchemy(app)
