@@ -1,6 +1,8 @@
 from flask import Flask, request, jsonify, session, render_template
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
+import time
+from sqlalchemy.exc import OperationalError
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'
@@ -48,7 +50,21 @@ def logout():
 def index():
     return render_template('index.html')
 
+def connect_to_database(retries=5, delay=5):
+    for attempt in range(retries):
+        try:
+            with app.app_context():
+                db.create_all()
+            print("Successfully connected to the database!")
+            return
+        except OperationalError as e:
+            if attempt < retries - 1:
+                print(f"Database connection attempt {attempt + 1} failed. Retrying in {delay} seconds...")
+                time.sleep(delay)
+            else:
+                print("Failed to connect to the database after multiple attempts.")
+                raise e
+
 if __name__ == '__main__':
-    with app.app_context():
-        db.create_all()
+    connect_to_database()
     app.run(host='0.0.0.0', port=5000)
