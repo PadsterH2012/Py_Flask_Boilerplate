@@ -17,20 +17,16 @@
         <button type="submit">Update Profile</button>
     </form>
 
-    <button id="changePasswordBtn">Change Password</button>
-
-    <div id="changePasswordForm" style="display: none;">
-        <h2>Change Password</h2>
-        <form id="passwordForm">
-            <label for="newPassword">New Password:</label>
-            <input type="password" id="newPassword" name="newPassword" required>
-            
-            <label for="confirmNewPassword">Confirm New Password:</label>
-            <input type="password" id="confirmNewPassword" name="confirmNewPassword" required>
-            
-            <button type="submit">Update Password</button>
-        </form>
-    </div>
+    <h2>Change Password</h2>
+    <form id="passwordForm">
+        <label for="newPassword">New Password:</label>
+        <input type="password" id="newPassword" name="newPassword" required>
+        
+        <label for="confirmNewPassword">Confirm New Password:</label>
+        <input type="password" id="confirmNewPassword" name="confirmNewPassword" required>
+        
+        <button type="submit">Update Password</button>
+    </form>
 
     <script>
     document.getElementById('userSettingsForm').addEventListener('submit', function(e) {
@@ -52,19 +48,14 @@
         .then(response => response.json())
         .then(data => {
             if (data.message === 'Profile updated successfully!') {
-                alert('Profile updated successfully!');
+                console.log('Profile updated successfully!');
             } else {
-                alert('Error: ' + data.message);
+                console.error('Error:', data.message);
             }
         })
         .catch((error) => {
             console.error('Error:', error);
-            alert('An error occurred while updating the profile.');
         });
-    });
-
-    document.getElementById('changePasswordBtn').addEventListener('click', function() {
-        document.getElementById('changePasswordForm').style.display = 'block';
     });
 
     document.getElementById('passwordForm').addEventListener('submit', function(e) {
@@ -74,15 +65,15 @@
         const confirmNewPassword = document.getElementById('confirmNewPassword').value;
         
         if (newPassword !== confirmNewPassword) {
-            alert('New passwords do not match!');
+            console.error('New passwords do not match!');
             return;
         }
         
         // Add logic to send new password to the server
         console.log('Sending new password to server...');
-        console.log('New Password:', newPassword);
         
-        alert('Password change functionality not fully implemented yet.');
+        // Placeholder for password change functionality
+        console.log('Password change functionality not fully implemented yet.');
     });
     </script>
 {% endblock %}
