@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify, session
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
+from routes import register, login, logout
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'
@@ -12,7 +13,6 @@ class User(db.Model):
     username = db.Column(db.String(50), unique=True, nullable=False)
     password = db.Column(db.String(128), nullable=False)
 
-from routes import register, login, logout
 
 if __name__ == '__main__':
     db.create_all()
