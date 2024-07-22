@@ -53,7 +53,7 @@ def login():
     
     if user and check_password_hash(user.password, data['password']):
         session['user_id'] = user.id
-        return jsonify({'message': 'Login successful!'})
+        return jsonify({'message': 'Login successful!', 'redirect': url_for('dashboard')})
     
     return jsonify({'message': 'Invalid credentials!'}), 401
 
@@ -73,6 +73,12 @@ def login_page():
 @app.route('/register')
 def register_page():
     return render_template('register.html')  # Ensure this template exists in the templates directory
+
+@app.route('/dashboard')
+def dashboard():
+    if 'user_id' not in session:
+        return jsonify({'message': 'Unauthorized'}), 401
+    return render_template('dashboard.html')
 
 def connect_to_database(retries=5, delay=5):
     for attempt in range(retries):

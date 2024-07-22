@@ -5,4 +5,22 @@
 {% block content %}
     <h1>Dashboard</h1>
     <p>Welcome to your dashboard!</p>
+    <button id="logoutButton">Logout</button>
+
+    <script>
+    document.getElementById('logoutButton').addEventListener('click', function() {
+        fetch('/logout', {
+            method: 'POST',
+        })
+        .then(response => response.json())
+        .then(data => {
+            alert(data.message);
+            window.location.href = '/';
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+            alert('An error occurred during logout.');
+        });
+    });
+    </script>
 {% endblock %}
