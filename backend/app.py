@@ -50,6 +50,14 @@ def logout():
 def index():
     return render_template('index.html')
 
+@app.route('/login')
+def login_page():
+    return render_template('login.html')
+
+@app.route('/register')
+def register_page():
+    return render_template('register.html')
+
 def connect_to_database(retries=5, delay=5):
     for attempt in range(retries):
         try:
