@@ -59,7 +59,8 @@ def register_page():
     return render_template('register.html')
 
 def connect_to_database(retries=5, delay=5):
-    for attempt in range(retries):
+    try:
+        for attempt in range(retries):
         try:
             with app.app_context():
                 db.create_all()
@@ -67,7 +68,7 @@ def connect_to_database(retries=5, delay=5):
             return
         except OperationalError as e:
             if attempt < retries - 1:
-                print(f"Database connection attempt {attempt + 1} failed. Retrying in {delay} seconds...")
+                print(f"Database connection attempt {attempt + 1} failed: {e}. Retrying in {delay} seconds...")
                 time.sleep(delay)
             else:
                 print("Failed to connect to the database after multiple attempts.")
