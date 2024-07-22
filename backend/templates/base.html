@@ -11,6 +11,18 @@
     {% block extra_css %}{% endblock %}
 </head>
 <body>
+    {% if session.get('user_id') %}
+    <header>
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
+                <li><a href="{{ url_for('user_settings') }}">User Settings</a></li>
+                <li><a href="{{ url_for('app_settings') }}">App Settings</a></li>
+                <li><a href="#" id="logoutButton">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+    {% endif %}
     <div class="content">
         {% block content %}{% endblock %}
     </div>
@@ -18,5 +30,23 @@
         <p>&copy; 2024 Flask App. All rights reserved.</p>
     </footer>
     {% block extra_js %}{% endblock %}
+    {% if session.get('user_id') %}
+    <script>
+    document.getElementById('logoutButton').addEventListener('click', function(e) {
+        e.preventDefault();
+        fetch('/logout', {
+            method: 'POST',
+        })
+        .then(response => response.json())
+        .then(data => {
+            window.location.href = '/';
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+            alert('An error occurred during logout.');
+        });
+    });
+    </script>
+    {% endif %}
 </body>
 </html>
