@@ -2,7 +2,7 @@ from flask import Flask, request, jsonify, session, render_template
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
 
-app = Flask(__name__, static_folder='.', static_url_path='')
+app = Flask(__name__)
 app.secret_key = 'your_secret_key'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://user:password@db:5432/mydatabase'
 db = SQLAlchemy(app)
@@ -46,7 +46,7 @@ def logout():
 
 @app.route('/')
 def index():
-    return app.send_static_file('index.html')
+    return render_template('index.html')
 
 if __name__ == '__main__':
     with app.app_context():
