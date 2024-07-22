@@ -1,5 +1,6 @@
 from flask import Flask, request, jsonify, session, render_template, url_for
 from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
 from werkzeug.security import generate_password_hash, check_password_hash
 import time
 from sqlalchemy.exc import OperationalError
@@ -9,8 +10,10 @@ app = Flask(__name__, template_folder=os.path.abspath('templates'), static_folde
 app.secret_key = 'your_secret_key'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://user:password@db:5432/mydatabase'
 db = SQLAlchemy(app)
+migrate = Migrate(app, db)
 
 class User(db.Model):
+    __tablename__ = 'users'  # Explicitly set the table name
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(50), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
