@@ -84,7 +84,8 @@ def dashboard():
 def user_settings():
     if 'user_id' not in session:
         return jsonify({'message': 'Unauthorized'}), 401
-    return render_template('user_settings.html')
+    user = User.query.get(session['user_id'])
+    return render_template('user_settings.html', username=user.username, email=user.email)
 
 @app.route('/app_settings')
 def app_settings():

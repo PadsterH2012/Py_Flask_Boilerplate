@@ -6,10 +6,10 @@
     <h1>User Settings</h1>
     <form id="userSettingsForm">
         <label for="username">Username:</label>
-        <input type="text" id="username" name="username" required>
+        <input type="text" id="username" name="username" value="{{ username }}" required>
         
         <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required>
+        <input type="email" id="email" name="email" value="{{ email }}" required>
         
         <label for="currentPassword">Current Password:</label>
         <input type="password" id="currentPassword" name="currentPassword" required>
@@ -26,8 +26,28 @@
     <script>
     document.getElementById('userSettingsForm').addEventListener('submit', function(e) {
         e.preventDefault();
-        // Add logic to handle form submission
-        alert('Settings update functionality not implemented yet.');
+        
+        const username = document.getElementById('username').value;
+        const email = document.getElementById('email').value;
+        const currentPassword = document.getElementById('currentPassword').value;
+        const newPassword = document.getElementById('newPassword').value;
+        const confirmNewPassword = document.getElementById('confirmNewPassword').value;
+        
+        if (newPassword !== confirmNewPassword) {
+            alert('New passwords do not match!');
+            return;
+        }
+        
+        // Add logic to send updated user settings to the server
+        console.log('Sending updated user settings to server...');
+        // You would typically use fetch() here to send the data to the server
+        // For now, we'll just log the values
+        console.log('Username:', username);
+        console.log('Email:', email);
+        console.log('Current Password:', currentPassword);
+        console.log('New Password:', newPassword);
+        
+        alert('Settings update functionality not fully implemented yet.');
     });
     </script>
 {% endblock %}
