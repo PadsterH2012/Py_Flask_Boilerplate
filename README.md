@@ -11,6 +11,9 @@ A robust boilerplate for Flask applications with user authentication, PostgreSQL
 - User dashboard and settings pages
 - Theme switching capability (light/dark mode)
 - Flask-Migrate for database migrations
+- Secure password hashing with Werkzeug
+- Session-based authentication
+- RESTful API structure
 
 ## Prerequisites
 
@@ -50,6 +53,8 @@ Py_Flask_Boilerplate/
 │   │       ├── base.css
 │   │       └── dark-theme.css
 │   ├── app.py
+│   ├── routes.py
+│   ├── models.py
 │   ├── Dockerfile
 │   └── requirements.txt
 ├── db/
@@ -73,9 +78,11 @@ Py_Flask_Boilerplate/
 To make changes to the application:
 
 1. Modify the Flask application in `backend/app.py`
-2. Update HTML templates in `backend/templates/`
-3. Add or modify CSS in `backend/static/css/`
-4. Rebuild and restart the Docker containers to see your changes:
+2. Update routes in `backend/routes.py`
+3. Modify database models in `backend/models.py`
+4. Update HTML templates in `backend/templates/`
+5. Add or modify CSS in `backend/static/css/`
+6. Rebuild and restart the Docker containers to see your changes:
    ```
    docker-compose down
    docker-compose up --build
@@ -105,6 +112,22 @@ This project uses Flask-Migrate for database migrations. To create and apply mig
    flask db upgrade
    ```
 
+## API Endpoints
+
+- POST `/register`: Register a new user
+- POST `/login`: Authenticate a user
+- POST `/logout`: Log out the current user
+- GET `/dashboard`: Access user dashboard
+- GET, POST `/user_settings`: View and update user settings
+- GET, POST `/app_settings`: View and update application settings
+
+## Security Features
+
+- Password hashing using Werkzeug's generate_password_hash and check_password_hash
+- Session-based authentication
+- CSRF protection (to be implemented)
+- Input validation and sanitization (to be implemented)
+
 ## Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request.
@@ -125,3 +148,4 @@ This project is open source and available under the [MIT License](LICENSE).
 - SQLAlchemy
 - PostgreSQL
 - Docker
+- Werkzeug
