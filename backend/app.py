@@ -26,7 +26,7 @@ def register():
         return jsonify({'message': 'Missing username or password'}), 400
     
     username = data['username']
-    password = generate_password_hash(data['password'], method='sha256')
+    password = generate_password_hash(data['password'], method='pbkdf2:sha256')
     
     new_user = User(username=username, password=password)
     db.session.add(new_user)
