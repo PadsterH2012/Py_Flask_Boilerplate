@@ -80,11 +80,26 @@ def dashboard():
         return jsonify({'message': 'Unauthorized'}), 401
     return render_template('dashboard.html')
 
-@app.route('/user_settings')
+@app.route('/user_settings', methods=['GET', 'POST'])
 def user_settings():
     if 'user_id' not in session:
         return jsonify({'message': 'Unauthorized'}), 401
+    
     user = User.query.get(session['user_id'])
+    
+    if request.method == 'POST':
+        data = request.form
+        if 'username' in data and 'email' in data and 'currentPassword' in data:
+            if check_password_hash(user.password, data['currentPassword']):
+                user.username = data['username']
+                user.email = data['email']
+                db.session.commit()
+                return jsonify({'message': 'Profile updated successfully!'})
+            else:
+                return jsonify({'message': 'Current password is incorrect'}), 400
+        else:
+            return jsonify({'message': 'Missing required fields'}), 400
+    
     return render_template('user_settings.html', username=user.username, email=user.email)
 
 @app.route('/app_settings')

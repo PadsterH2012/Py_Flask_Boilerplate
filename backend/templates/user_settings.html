@@ -40,13 +40,27 @@
         const email = document.getElementById('email').value;
         const currentPassword = document.getElementById('currentPassword').value;
         
-        // Add logic to send updated user settings to the server
-        console.log('Sending updated user settings to server...');
-        console.log('Username:', username);
-        console.log('Email:', email);
-        console.log('Current Password:', currentPassword);
+        const formData = new FormData();
+        formData.append('username', username);
+        formData.append('email', email);
+        formData.append('currentPassword', currentPassword);
         
-        alert('Profile update functionality not fully implemented yet.');
+        fetch('/user_settings', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.message === 'Profile updated successfully!') {
+                alert('Profile updated successfully!');
+            } else {
+                alert('Error: ' + data.message);
+            }
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+            alert('An error occurred while updating the profile.');
+        });
     });
 
     document.getElementById('changePasswordBtn').addEventListener('click', function() {
