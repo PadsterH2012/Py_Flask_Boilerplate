@@ -15,6 +15,8 @@ class User(db.Model):
 @app.route('/register', methods=['POST'])
 def register():
     data = request.get_json()
+    if not data or 'username' not in data or 'password' not in data:
+        return jsonify({'message': 'Missing username or password'}), 400
     username = data['username']
     password = generate_password_hash(data['password'], method='sha256')
     
@@ -27,6 +29,8 @@ def register():
 @app.route('/login', methods=['POST'])
 def login():
     data = request.get_json()
+    if not data or 'username' not in data or 'password' not in data:
+        return jsonify({'message': 'Missing username or password'}), 400
     user = User.query.filter_by(username=data['username']).first()
     
     if user and check_password_hash(user.password, data['password']):
