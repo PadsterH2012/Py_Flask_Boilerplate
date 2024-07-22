@@ -1,6 +1,6 @@
 from flask import request, jsonify, session
 from werkzeug.security import generate_password_hash, check_password_hash
-from .app import db, app, User
+from app import db, app, User
 
 @app.route('/register', methods=['POST'])
 def register():
