@@ -62,7 +62,7 @@ def connect_to_database(retries=5, delay=5):
     try:
         for attempt in range(retries):
             try:
-            with app.app_context():
+                with app.app_context():
                 db.create_all()
             print("Successfully connected to the database!")
             return
