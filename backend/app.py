@@ -12,7 +12,7 @@ class User(db.Model):
     username = db.Column(db.String(50), unique=True, nullable=False)
     password = db.Column(db.String(128), nullable=False)
 
-from backend.routes import register, login, logout
+from routes import register, login, logout
 
 if __name__ == '__main__':
     db.create_all()
