@@ -23,22 +23,22 @@ pipeline {
             }
         }
 
-        stage('Push to Docker Hub') {
-            steps {
-                withCredentials([usernamePassword(credentialsId: 'docker-hub-credentials', usernameVariable: 'DOCKER_HUB_USERNAME', passwordVariable: 'DOCKER_HUB_PASSWORD')]) {
-                    sh "echo $DOCKER_HUB_PASSWORD | docker login -u $DOCKER_HUB_USERNAME --password-stdin"
-                    sh "docker push ${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}"
-                    sh "docker push ${DOCKER_IMAGE_NAME}:latest"
-                }
-            }
-        }
+        // stage('Push to Docker Hub') {
+        //     steps {
+        //         withCredentials([usernamePassword(credentialsId: 'docker-hub-credentials', usernameVariable: 'DOCKER_HUB_USERNAME', passwordVariable: 'DOCKER_HUB_PASSWORD')]) {
+        //             sh "echo $DOCKER_HUB_PASSWORD | docker login -u $DOCKER_HUB_USERNAME --password-stdin"
+        //             sh "docker push ${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}"
+        //             sh "docker push ${DOCKER_IMAGE_NAME}:latest"
+        //         }
+        //     }
+        // }
 
-        stage('Deploy with Docker Compose') {
-            steps {
-                sh 'docker-compose --version'  // Check if docker-compose is installed.
-                sh 'docker-compose up -d'
-            }
-        }
+        // stage('Deploy with Docker Compose') {
+        //     steps {
+        //         sh 'docker-compose --version'  // Check if docker-compose is installed.
+        //         sh 'docker-compose up -d'
+        //     }
+        // }
 
         stage('Run Tests') {
             steps {
